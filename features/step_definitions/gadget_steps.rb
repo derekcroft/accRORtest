@@ -40,17 +40,28 @@ When /^I add a part called "([^"]*)" to "([^"]*)"$/ do |arg1, arg2|
   } 
 end
 
-Then /^I should receive a notice saying that the part was successfully added$/ do
+Then /^I should (receive|see) a notice saying that the part was successfully (added|deleted)/ do |ignore_me, add_delete|
   steps %Q{ 
-    Then I should see "The part was successfully added."
+    Then I should see "The part was successfully #{add_delete}."
   }
 end
 
-Then /^I should see "([^"]*)" within the parts for "([^"]*)"$/ do |arg1, arg2|
+Then /^I should (not )?see "([^"]*)" within the parts for "([^"]*)"$/ do |non, arg1, arg2|
   steps %Q{
-    Then I should see "#{arg1}" within ".parts"
+    Then I should #{non}see "#{arg1}" within ".parts"
   }
 end
+
+Given /^"([^"]*)" has a part called "([^"]*)"$/ do |arg1, arg2|
+  Gadget.find_by_name(arg1).parts.create( { :name => arg2 } )
+end
+
+When /^I delete the "([^"]*)" part from "([^"]*)"$/ do |arg1, arg2|
+  steps %Q{
+    When I follow "Delete #{arg1}"
+  }
+end
+
 
 
 

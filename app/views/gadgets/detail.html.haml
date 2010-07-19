@@ -17,6 +17,8 @@
 
 %ul.parts
   - @gadget.parts.each do |p|
-    %li= p.name
+    %li
+      %span= p.name
+      %span= link_to "Delete #{p.name}", [@gadget, p], :method => :delete 
 
 = link_to "Back to Gadget Overview", root_path, :class => "breadcrumb"
