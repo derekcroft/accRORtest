@@ -1,4 +1,6 @@
 = stylesheet_link_tag "gadgets"
+- if flash[:notice]
+  %p.notice= flash[:notice]
 %h2= @gadget.name
 %dl{:id => @gadget.verbose_id}
   %dt Description
@@ -6,5 +8,15 @@
 
   %dt Weight
   %dd= @gadget.complete_weight
+
+- form_tag [@gadget, Part.new] do
+  %p
+    = label :part, :name, 'New Part Name' 
+    = text_field_tag 'part_name'
+    = submit_tag "Add Part"
+
+%ul.parts
+  - @gadget.parts.each do |p|
+    %li= p.name
 
 = link_to "Back to Gadget Overview", root_path, :class => "breadcrumb"

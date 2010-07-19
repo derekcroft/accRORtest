@@ -32,3 +32,25 @@ Then /^I should see that "([^"]*)" weighs (\d+) (\w+)$/ do |gadget_name, weight,
     assert page.has_content?(gadget.complete_weight)
   end
 end
+
+When /^I add a part called "([^"]*)" to "([^"]*)"$/ do |arg1, arg2|
+  steps %Q{
+    When I fill in "New Part Name" with "#{arg1}"
+    And I press "Add Part"
+  } 
+end
+
+Then /^I should receive a notice saying that the part was successfully added$/ do
+  steps %Q{ 
+    Then I should see "The part was successfully added."
+  }
+end
+
+Then /^I should see "([^"]*)" within the parts for "([^"]*)"$/ do |arg1, arg2|
+  steps %Q{
+    Then I should see "#{arg1}" within ".parts"
+  }
+end
+
+
+
